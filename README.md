@@ -1,2 +1,2 @@
-# posizioni-afam
-Piattaforma per trovare posizioni aperte di insegnamento AFAM (Alta Formazione Artistica e Musicale) presso Accademie, ISIA e Conservatori.
+# docenze-afam
+Piattaforma per trovare docenze bandite presso gli istituti AFAM (Alta Formazione Artistica e Musicale), come Accademie, ISIA e Conservatori.

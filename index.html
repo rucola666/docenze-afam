@@ -15,7 +15,8 @@
   --contrasto: #000000;
   --neutro-1: #E8E8E8;
   --neutro-2: #525252;
-  --font-size: 24px;
+  --font-size: 20px;
+  --font-size-mobile: 14px;
   --testo: lowercase;
   --weight-1: 420;
   --weight-2: 570;
@@ -59,13 +60,11 @@ header {
   align-items: center;
   gap: 10px;
   min-width: 0;
+  flex: 1;
 }
 
-.header-data {
-  font-weight: var(--weight-1);
-  color: var(--accento);
-  white-space: nowrap;
-  margin-left: auto;
+.br-mobile {
+  display: none;
 }
 
 header h1 {
@@ -80,8 +79,13 @@ header h1 {
   font-weight: var(--weight-1);
   color: var(--accento);
   margin-top: 0;
+  margin-left: auto;
   letter-spacing: 0;
   white-space: nowrap;
+}
+
+.header-conteggio {
+  display: none;
 }
 
 main {
@@ -111,12 +115,12 @@ main {
 }
 
 .filtro-categoria {
-  margin-bottom: 24px;
+  margin-bottom: 14px;
 }
 
 .filtro-titolo {
   color: var(--accento);
-  letter-spacing: 1px;
+  letter-spacing: 0;
   margin-bottom: 10px;
 }
 
@@ -150,6 +154,11 @@ main {
   color: var(--sfondo);
 }
 
+.filtro-bottone.attivo.azzerato {
+  background: var(--accento-2);
+  color: var(--sfondo);
+}
+
 .filtro-dropdown {
   position: relative;
 }
@@ -169,7 +178,7 @@ main {
   text-align: left;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0;
   transition: all 0.15s ease;
 }
 
@@ -177,6 +186,12 @@ main {
 .filtro-dropdown-trigger.ha-filtri,
 .filtro-dropdown-trigger.aperto {
   background: var(--accento);
+  color: var(--sfondo);
+}
+
+.filtro-dropdown-trigger.ha-azzerati {
+  background: var(--accento-2);
+  border-color: var(--accento-2);
   color: var(--sfondo);
 }
 
@@ -211,6 +226,11 @@ main {
   background: var(--neutro-2);
 }
 
+.filtro-dropdown-menu .filtro-codice-toggle {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
 .filtro-reset {
   width: 100%;
   background: transparent;
@@ -223,7 +243,7 @@ main {
   font-weight: var(--weight-2);
   text-transform: var(--testo);
   cursor: pointer;
-  margin-top: 15px;
+  margin-top: 7px;
   transition: all 0.15s ease;
 }
 
@@ -335,6 +355,24 @@ main {
   text-decoration: none;
 }
 
+.card.offerta-scaduta,
+.card.offerta-scaduta .card-disciplina,
+.card.offerta-scaduta .card-valore-puro,
+.card.offerta-scaduta .card-valore,
+.card.offerta-scaduta .card-etichetta,
+.card.offerta-scaduta .card-id,
+.card.offerta-scaduta .card-id:visited {
+  color: var(--neutro-1);
+}
+
+.card.offerta-scaduta .card-info-icon {
+  color: var(--neutro-1);
+}
+
+.card.offerta-scaduta:hover {
+  border-color: var(--neutro-1);
+}
+
 #filtri::-webkit-scrollbar,
 #offerte::-webkit-scrollbar {
   width: 6px;
@@ -351,6 +389,58 @@ main {
 }
 
 @media (max-width: 768px) {
+  :root {
+    --font-size: var(--font-size-mobile);
+  }
+
+  body {
+    height: auto;
+    overflow: visible;
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 300;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 16px;
+    row-gap: 0;
+    align-items: start;
+  }
+
+  .header-testo {
+    display: contents;
+  }
+
+  header h1 {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    white-space: normal;
+    align-self: start;
+    line-height: 1;
+  }
+
+  .header-sottotitolo {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    justify-self: end;
+    align-self: start;
+    margin-left: 0;
+    white-space: normal;
+    text-align: right;
+    line-height: 1;
+  }
+
+  .br-mobile {
+    display: block;
+  }
+
+  .hyphen {
+    display: none;
+  }
+
   main {
     flex-direction: column;
     height: auto;
@@ -360,19 +450,106 @@ main {
   #filtri {
     width: 100%;
     min-width: 100%;
-    max-height: 200px;
     border-right: none;
     border-bottom: 1px solid var(--neutro-1);
     overflow-x: auto;
-    overflow-y: hidden;
+    display: none;
+  }
+
+  #filtri.aperto {
+    display: block;
+  }
+
+  .card .tooltip,
+  .card-info-icon {
+    display: none;
   }
 
   .filtro-bottoni {
     flex-wrap: nowrap;
   }
 
+  .filtro-dropdown-menu .filtro-bottoni {
+    flex-wrap: wrap;
+  }
+
+  .filtro-dropdown-menu .filtro-bottone {
+    flex: 0 1 auto;
+  }
+
+  .filtro-bottone-luogo {
+    white-space: nowrap;
+  }
+
+  .filtro-bottone-disciplina {
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+
+  .filtro-bottone {
+    line-height: 1;
+  }
+
+  .filtro-dropdown-trigger {
+    line-height: 1;
+  }
+
+  .filtro-reset {
+    line-height: 1;
+  }
+
+  .filtri-toggle {
+    background: transparent;
+    color: var(--accento);
+    border: 2px solid var(--accento);
+    border-radius: var(--raggio-bottoni);
+    padding: 6px 10px;
+    font-family: 'Titillium Web', sans-serif;
+    font-size: var(--font-size);
+    font-weight: var(--weight-2);
+    text-transform: var(--testo);
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .filtri-toggle.ha-filtri {
+    background: var(--accento);
+    color: var(--sfondo);
+  }
+
+  .filtri-toggle.ha-azzerati {
+    background: var(--accento-2);
+    border-color: var(--accento-2);
+    color: var(--sfondo);
+  }
+
+  .filtro-dropdown-menu .filtro-codice-toggle {
+    display: none;
+  }
+
+  .header-conteggio {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: calc(var(--font-size) * 1.5);
+    font-weight: var(--weight-3);
+    line-height: 1;
+    color: var(--contrasto);
+  }
+
+  .offerte-bar .offerte-conteggio {
+    display: none;
+  }
+
   #offerte {
     overflow: visible;
+  }
+
+  .card {
+    padding: 14px;
   }
 }
   </style>
@@ -380,10 +557,10 @@ main {
 <body>
   <header>
     <div class="header-testo">
-      <h1>posizioni---afam*</h1>
-      <div class="header-sottotitolo">cerca bandi di docenza</div>
+      <h1>docenze<span class="hyphen">-</span><br class="br-mobile">afam--+</h1>
+      <div class="header-sottotitolo">docenze bandite <br class="br-mobile">al 05.09.2026</div>
     </div>
-    <div class="header-data">Aggiornato il 01.09.2026</div>
+    <div class="header-conteggio"></div>
   </header>
   <main>
     <aside id="filtri"></aside>
@@ -395,18 +572,38 @@ const offerte = [{"bando_id":"2216","istituto":"CONSERVATORIO DI MUSICA DI MILAN
 const categorie = {
   scuole: { campo: 'tipo_scuola', titolo: 'Scuola', tipo: 'bottoni' },
   contratti: { campo: 'tipo_contratto', titolo: 'Contratto', tipo: 'bottoni' },
-  discipline: { campo: 'discipline_nomi', titolo: 'Disciplina', tipo: 'dropdown' },
-  luoghi: { campo: 'dove', titolo: 'Luogo', tipo: 'dropdown' }
+  luoghi: { campo: 'dove', titolo: 'Luogo', tipo: 'dropdown' },
+  discipline: { campo: 'discipline_nomi', titolo: 'Disciplina', tipo: 'dropdown', codice: 'codice_sector' }
 };
 
 const filtriAttivi = {};
 Object.keys(categorie).forEach(k => { filtriAttivi[k] = new Set(); });
 
-let ordinamentoScadenza = true;
+let ordinamentoScadenza = false;
+let mostraCodiciAfam = false;
+let filtriAperti = false;
+let filtriTotali = 0;
+let haAzzeratiGlobali = false;
 const dropdownAperti = new Set();
+
+const codicePerDisciplina = new Map();
+offerte.forEach(o => {
+  const nome = (o.discipline_nomi || '').trim();
+  const cod = (o.codice_sector || '').trim();
+  if (nome && cod && !codicePerDisciplina.has(nome)) {
+    codicePerDisciplina.set(nome, cod);
+  }
+});
 
 function labelValore(val) {
   return (val === '') ? '/' : val;
+}
+
+function etichettaDisciplina(valore) {
+  if (!mostraCodiciAfam) return labelValore(valore);
+  const cod = codicePerDisciplina.get(valore);
+  if (valore === '' || !cod) return '/';
+  return cod.replace(/^AFAM/, '');
 }
 
 function applicaFiltri(filtri) {
@@ -428,9 +625,25 @@ function conteggiaValori(lista, campo) {
   return m;
 }
 
+function configuraEtichetta(key, valore, conf, mostraCodici) {
+  if (conf.codice) return etichettaDisciplina(valore);
+  if (key === 'contratti') {
+    const abbrev = {
+      'altri contratti': 'altri',
+      'tempo determinato': 'determinato',
+      'tempo indeterminato': 'indeterminato'
+    };
+    const base = valore.toLowerCase();
+    return abbrev[base] !== undefined ? abbrev[base] : labelValore(valore);
+  }
+  return labelValore(valore);
+}
+
 function renderFiltri() {
   const aside = document.getElementById('filtri');
   aside.innerHTML = '';
+  filtriTotali = 0;
+  haAzzeratiGlobali = false;
 
   Object.keys(categorie).forEach(key => {
     const conf = categorie[key];
@@ -442,10 +655,16 @@ function renderFiltri() {
     const base = applicaFiltri(filtriEsclusi);
     const conteggi = conteggiaValori(base, conf.campo);
     const items = [...tutti.keys()]
-      .map((valore) => ({ valore: valore, etichetta: labelValore(valore), conteggio: conteggi.get(valore) || 0 }))
+      .map((valore) => ({ valore: valore, etichetta: configuraEtichetta(key, valore, conf, mostraCodiciAfam), conteggio: conteggi.get(valore) || 0 }))
       .filter((it) => it.conteggio > 0 || filtriAttivi[key].has(it.valore))
       .sort((a, b) => a.etichetta.localeCompare(b.etichetta));
-    renderFiltro(key, conf.titolo, items, conf.tipo);
+    renderFiltro(key, conf.titolo, items, conf.tipo, conf.codice);
+    items.forEach(it => {
+      if (filtriAttivi[key].has(it.valore)) {
+        filtriTotali += 1;
+        if (it.conteggio === 0) haAzzeratiGlobali = true;
+      }
+    });
   });
 
   const resetBtn = document.createElement('button');
@@ -453,21 +672,30 @@ function renderFiltri() {
   resetBtn.textContent = 'reset';
   resetBtn.addEventListener('click', resetFiltri);
   aside.appendChild(resetBtn);
+
+  if (filtriAperti) {
+    aside.classList.add('aperto');
+  } else {
+    aside.classList.remove('aperto');
+  }
 }
 
 function resetFiltri() {
   Object.keys(categorie).forEach(k => { filtriAttivi[k].clear(); });
+  if (!window.matchMedia('(max-width: 768px)').matches) {
+    dropdownAperti.clear();
+  }
   renderFiltri();
   renderOfferte();
 }
 
-function renderFiltro(key, titolo, items, tipo) {
+function renderFiltro(key, titolo, items, tipo, codice) {
   const aside = document.getElementById('filtri');
   const div = document.createElement('div');
   div.className = 'filtro-categoria';
 
   if (tipo === 'dropdown') {
-    renderDropdown(div, key, titolo, items);
+    renderDropdown(div, key, titolo, items, codice);
   } else {
     const titleEl = document.createElement('div');
     titleEl.className = 'filtro-titolo';
@@ -488,14 +716,23 @@ function renderBottoni(div, key, items) {
     btn.textContent = it.etichetta + ' ' + it.conteggio;
     btn.dataset.categoria = key;
     btn.dataset.valore = it.valore;
-    if (filtriAttivi[key].has(it.valore)) btn.classList.add('attivo');
+    if (filtriAttivi[key].has(it.valore)) {
+      btn.classList.add('attivo');
+      if (it.conteggio === 0) btn.classList.add('azzerato');
+    }
     btn.addEventListener('click', () => toggleFiltro(key, it.valore, btn));
     bottoni.appendChild(btn);
   });
   div.appendChild(bottoni);
 }
 
-function renderDropdown(div, key, titolo, items) {
+function abbreviaNomeDisciplina(nome) {
+  const parole = String(nome).trim().split(/\s+/).filter(Boolean);
+  if (parole.length <= 3) return nome;
+  return parole.slice(0, 3).join(' ') + '...';
+}
+
+function renderDropdown(div, key, titolo, items, codice) {
   const wrapper = document.createElement('div');
   wrapper.className = 'filtro-dropdown';
 
@@ -503,7 +740,7 @@ function renderDropdown(div, key, titolo, items) {
   trigger.className = 'filtro-dropdown-trigger';
   const toggle = document.createElement('span');
   toggle.className = 'filtro-dropdown-toggle';
-  toggle.textContent = '+';
+  toggle.textContent = '+\u00A0\u00A0\u00A0';
   const triggerLabel = document.createElement('span');
   triggerLabel.textContent = titolo;
   trigger.appendChild(toggle);
@@ -512,24 +749,51 @@ function renderDropdown(div, key, titolo, items) {
   const menu = document.createElement('div');
   menu.className = 'filtro-dropdown-menu';
 
+  if (codice) {
+    const toggleVista = document.createElement('button');
+    toggleVista.className = 'filtro-reset filtro-codice-toggle';
+    toggleVista.textContent = mostraCodiciAfam ? 'mostra nomi' : 'codici afam';
+    toggleVista.addEventListener('click', () => {
+      mostraCodiciAfam = !mostraCodiciAfam;
+      renderFiltri();
+    });
+    menu.appendChild(toggleVista);
+  }
+
   const bottoni = document.createElement('div');
   bottoni.className = 'filtro-bottoni';
+  const mostraCodici = !!(codice && mostraCodiciAfam);
+  const mobile = window.matchMedia('(max-width: 768px)').matches;
   items.forEach(it => {
     const btn = document.createElement('button');
     btn.className = 'filtro-bottone';
-    btn.textContent = it.etichetta + ' ' + it.conteggio;
+    if (key === 'luoghi') btn.classList.add('filtro-bottone-luogo');
+    if (key === 'discipline') btn.classList.add('filtro-bottone-disciplina');
+    let etichetta = it.etichetta;
+    if (codice && !mostraCodici && mobile) {
+      etichetta = abbreviaNomeDisciplina(etichetta);
+    }
+    btn.textContent = (codice && mostraCodici) ? it.etichetta : (etichetta + '\u00A0' + it.conteggio);
     btn.dataset.categoria = key;
     btn.dataset.valore = it.valore;
-    if (filtriAttivi[key].has(it.valore)) btn.classList.add('attivo');
+    if (filtriAttivi[key].has(it.valore)) {
+      btn.classList.add('attivo');
+      if (it.conteggio === 0) btn.classList.add('azzerato');
+    }
     btn.addEventListener('click', () => toggleFiltro(key, it.valore, btn));
     bottoni.appendChild(btn);
   });
   menu.appendChild(bottoni);
 
+  const haAzzerati = items.some(it => filtriAttivi[key].has(it.valore) && it.conteggio === 0);
+  if (haAzzerati) {
+    trigger.classList.add('ha-azzerati');
+  }
+
   trigger.addEventListener('click', () => {
     let aperto = menu.classList.toggle('aperto');
     trigger.classList.toggle('aperto', aperto);
-    toggle.textContent = aperto ? '-' : '+';
+    toggle.textContent = aperto ? '-\u00A0\u00A0\u00A0' : '+\u00A0\u00A0\u00A0';
     if (aperto) {
       dropdownAperti.add(key);
     } else {
@@ -609,12 +873,40 @@ function renderOfferte() {
   const section = document.getElementById('offerte');
   section.innerHTML = '';
 
+  const headerConteggio = document.querySelector('.header-conteggio');
+  if (headerConteggio) {
+    headerConteggio.textContent = String(filtrate.length);
+  }
+
   const bar = document.createElement('div');
+  bar.className = 'offerte-bar';
   bar.style.cssText = 'display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px;';
 
+  if (window.matchMedia('(max-width: 768px)').matches) {
+    const filtriToggle = document.createElement('button');
+    filtriToggle.className = 'filtri-toggle';
+    filtriToggle.textContent = filtriAperti ? '-\u00A0\u00A0\u00A0filtri' : '+\u00A0\u00A0\u00A0filtri';
+    if (filtriTotali > 0) filtriToggle.classList.add('ha-filtri');
+    if (haAzzeratiGlobali) filtriToggle.classList.add('ha-azzerati');
+    filtriToggle.addEventListener('click', () => {
+      filtriAperti = !filtriAperti;
+      renderFiltri();
+      renderOfferte();
+    });
+    bar.appendChild(filtriToggle);
+  }
+
   const count = document.createElement('div');
+  count.className = 'offerte-conteggio';
   count.style.cssText = 'color: var(--contrasto); font-size: var(--font-size); font-weight: var(--weight-3);';
-  count.textContent = filtrate.length + ' offert' + (filtrate.length === 1 ? 'a' : 'e') + ' trovat' + (filtrate.length === 1 ? 'a' : 'e');
+  const numero = document.createElement('span');
+  numero.className = 'offerte-numero';
+  numero.textContent = String(filtrate.length);
+  const testo = document.createElement('span');
+  testo.className = 'offerte-etichetta';
+  testo.textContent = ' offert' + (filtrate.length === 1 ? 'a' : 'e') + ' trovat' + (filtrate.length === 1 ? 'a' : 'e');
+  count.appendChild(numero);
+  count.appendChild(testo);
   bar.appendChild(count);
 
   const sortBtn = document.createElement('button');
@@ -639,9 +931,16 @@ function renderOfferte() {
     grid.appendChild(msg);
   }
 
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
   filtrate.forEach(o => {
     const card = document.createElement('div');
     card.className = 'card';
+
+    const scadenzaTs = parseDataBando(o.ultimo_giorno_candidatura);
+    if (scadenzaTs !== null && Date.now() > scadenzaTs + 86399999) {
+      card.classList.add('offerta-scaduta');
+    }
 
     const disc = document.createElement('div');
     disc.className = 'card-disciplina';
@@ -678,53 +977,55 @@ function renderOfferte() {
 
     card.appendChild(campo('Scade il ', (o.ultimo_giorno_candidatura || '').trim().replace(/-/g, '.')));
 
-    const idCampo = document.createElement('div');
-    idCampo.className = 'card-campo';
-    const idLabel = document.createElement('span');
-    idLabel.className = 'card-etichetta';
-    idLabel.textContent = 'Allegati ';
-    idCampo.appendChild(idLabel);
-    o.allegati.forEach((url, i) => {
-      if (!url) return;
-      const al = document.createElement('a');
-      al.className = 'card-id';
-      al.href = url;
-      al.target = '_blank';
-      al.rel = 'noopener';
-      al.textContent = String(i + 1);
-      idCampo.appendChild(al);
-      if (i < o.allegati.length - 1) {
-        idCampo.appendChild(document.createTextNode(' '));
+    if (!isMobile) {
+      const idCampo = document.createElement('div');
+      idCampo.className = 'card-campo';
+      const idLabel = document.createElement('span');
+      idLabel.className = 'card-etichetta';
+      idLabel.textContent = 'Allegati ';
+      idCampo.appendChild(idLabel);
+      o.allegati.forEach((url, i) => {
+        if (!url) return;
+        const al = document.createElement('a');
+        al.className = 'card-id';
+        al.href = url;
+        al.target = '_blank';
+        al.rel = 'noopener';
+        al.textContent = String(i + 1);
+        idCampo.appendChild(al);
+        if (i < o.allegati.length - 1) {
+          idCampo.appendChild(document.createTextNode(' '));
+        }
+      });
+      card.appendChild(idCampo);
+
+      if (o.bando_inpa) {
+        const inpaCampo = document.createElement('div');
+        inpaCampo.className = 'card-campo';
+        const inpaLabel = document.createElement('span');
+        inpaLabel.className = 'card-etichetta';
+        inpaLabel.textContent = 'Candidature ';
+        const inpa = document.createElement('a');
+        inpa.className = 'card-id';
+        inpa.href = o.bando_inpa;
+        inpa.target = '_blank';
+        inpa.rel = 'noopener';
+        inpa.textContent = 'portale reclutamento';
+        inpaCampo.appendChild(inpaLabel);
+        inpaCampo.appendChild(inpa);
+        card.appendChild(inpaCampo);
       }
-    });
-    card.appendChild(idCampo);
 
-    if (o.bando_inpa) {
-      const inpaCampo = document.createElement('div');
-      inpaCampo.className = 'card-campo';
-      const inpaLabel = document.createElement('span');
-      inpaLabel.className = 'card-etichetta';
-      inpaLabel.textContent = 'Candidature ';
-      const inpa = document.createElement('a');
-      inpa.className = 'card-id';
-      inpa.href = o.bando_inpa;
-      inpa.target = '_blank';
-      inpa.rel = 'noopener';
-      inpa.textContent = 'portale reclutamento';
-      inpaCampo.appendChild(inpaLabel);
-      inpaCampo.appendChild(inpa);
-      card.appendChild(inpaCampo);
+      const email = document.createElement('div');
+      email.className = 'card-campo card-valore-puro';
+      email.textContent = o.email_rup;
+      card.appendChild(email);
+
+      const telefono = document.createElement('div');
+      telefono.className = 'card-campo card-valore-puro';
+      telefono.textContent = '+39 ' + o.telefono_rup;
+      card.appendChild(telefono);
     }
-
-    const email = document.createElement('div');
-    email.className = 'card-campo card-valore-puro';
-    email.textContent = o.email_rup;
-    card.appendChild(email);
-
-    const telefono = document.createElement('div');
-    telefono.className = 'card-campo card-valore-puro';
-    telefono.textContent = '+39 ' + o.telefono_rup;
-    card.appendChild(telefono);
 
     grid.appendChild(card);
   });
